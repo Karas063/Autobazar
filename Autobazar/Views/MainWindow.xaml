@@ -1,0 +1,32 @@
+﻿<Window x:Class="Autobazar.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Autobazar" Height="450" Width="800">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="3*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Seznam aut -->
+        <ListBox ItemsSource="{Binding Auta}"
+                 SelectedItem="{Binding VybraneAuto}"
+                 DisplayMemberPath="Model" />
+
+        <!-- Detail -->
+        <StackPanel Grid.Column="1" Margin="10">
+            <TextBox Text="{Binding VybraneAuto.Znacka}"/>
+            <TextBox Text="{Binding VybraneAuto.Model}" />
+            <TextBox Text="{Binding VybraneAuto.Barva}" />
+            <TextBox Text="{Binding VybraneAuto.SPZ}"/>
+            <TextBox Text="{Binding VybraneAuto.RokVyroby}" />
+            <TextBox Text="{Binding VybraneAuto.Palivo}" />
+            <TextBox Text="{Binding VybraneAuto.Najezd}" />
+
+            <Button Content="Přidat" Command="{Binding PridatCommand}" />
+            <Button Content="Smazat" Command="{Binding SmazatCommand}" />
+            <Button Content="Uložit do JSON" Command="{Binding UlozitCommand}" />
+        </StackPanel>
+    </Grid>
+</Window>
