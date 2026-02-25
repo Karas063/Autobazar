@@ -19,6 +19,11 @@ namespace Autobazar.ViewModels
             set
             {
                 _vybraneAuto = value;
+                // Zajistí, že Vlastnik nikdy nebude null při bindování v XAML
+                if (_vybraneAuto != null && _vybraneAuto.Vlastnik == null)
+                {
+                    _vybraneAuto.Vlastnik = new Vlastnik();
+                }
                 OnPropertyChanged();
             }
         }
@@ -31,6 +36,9 @@ namespace Autobazar.ViewModels
         {
             Auta = new ObservableCollection<Auto>(_jsonService.Nacti());
 
+            // Pokud je v kolekci alespoň jeden záznam, nastavíme vybraný
+            VybraneAuto = Auta.FirstOrDefault();
+
             PridatCommand = new RelayCommand(Pridat);
             SmazatCommand = new RelayCommand(Smazat);
             UlozitCommand = new RelayCommand(Ulozit);
@@ -38,7 +46,10 @@ namespace Autobazar.ViewModels
 
         private void Pridat()
         {
-            var noveAuto = new Auto();
+            var noveAuto = new Auto
+            {
+                Vlastnik = new Vlastnik() // inicializace vlastnika pro nově vytvořené auto
+            };
             Auta.Add(noveAuto);
             VybraneAuto = noveAuto;
         }
